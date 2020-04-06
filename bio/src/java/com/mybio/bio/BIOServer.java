@@ -1,10 +1,13 @@
-package com.mybio;
+package com.mybio.bio;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * 单线程阻塞
+ */
 public class BIOServer {
     private static byte[] BYTE = new byte[1024];
     private static int ZERO = 0;
