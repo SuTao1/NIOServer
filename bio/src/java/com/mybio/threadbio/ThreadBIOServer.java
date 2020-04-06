@@ -21,8 +21,13 @@ public class ThreadBIOServer {
                 // 阻塞等待客户连接
                 System.out.println("阻塞——等待客户连接");
                 Socket socket = serverSocket.accept();
-                // 每有一个客户创建连接，便开启一个线程并启动，将 “ 等待客户输入流 ” 的阻塞交给子线程处理。避免影响主线程监听新客户的连接
-                new Thread(new ThreadIO(socket)).start();
+                if (null != socket) {
+                    // 每有一个客户创建连接，便开启一个线程并启动，将 “ 等待客户输入流 ” 的阻塞交给子线程处理。避免影响主线程监听新客户的连接
+                    //new Thread(new ThreadIO(socket)).start();
+                    ThreadIO threadIO = new ThreadIO(socket);
+                    Thread thread = new Thread(threadIO);
+                    thread.start();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -38,6 +43,7 @@ public class ThreadBIOServer {
             this.socket = socket;
         }
 
+        // 子线程，负责客户端输入读取的阻塞
         @Override
         public void run() {
             try {
