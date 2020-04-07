@@ -4,9 +4,6 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +50,8 @@ public class NIOServer {
                 if (length == -1) {
                     CLIENT_LIST.remove(socketChannel);
                 } else if (length > 0) {
-                    System.out.println("客户发送的内容 : " + BYTE);
+                    BYTE.flip();
+                    System.out.println("客户发送的内容 : " + new String(BYTE.array()));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
